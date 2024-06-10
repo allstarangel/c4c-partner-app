@@ -1,8 +1,14 @@
 // AddPartnerForm.js
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 
 const AddPartnerForm = ({ onAddPartner }) => {
+  const navigation = useNavigation();
+  const { onAddPartner} = route.params;
+
+
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [description, setDescription] = useState('');
@@ -15,10 +21,11 @@ const AddPartnerForm = ({ onAddPartner }) => {
       isActive: true,
     };
     onAddPartner(newPartner);
-    // Reset form fields
+    // Reset form fields and navigate to the partner list
     setName('');
     setLogo('');
     setDescription('');
+    navigation.goBack();
   };
 
   return (

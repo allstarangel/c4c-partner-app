@@ -1,24 +1,29 @@
+// PartnerList.js
 import React from 'react';
-import {View,Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const PartnerList = ({ partners, onSelectPartner})=> {
-    const renterPartnerItem = ({ item }) => (
-        <TouchableOpacity onprogress={() => onSelectPartner(item)}>
-            <View style={StyleSheet.partnerItem}>
-                <Text style={StyleSheet.partnerName}>{item.name}</Text>
-                </View> 
-        </TouchableOpacity>
-    );
+const PartnerList = ({ route }) => {
+  const navigation = useNavigation();
+  const partners = route.params.partners;
 
-    return(
-        <View style={StyleSheet.container}>
-            <FlatList
-                data={partner}
-                renderItem={renderPartnerItem}
-                keyExtractor={(item) => item.id.toString()}
-            />
-        </View>
-    );
+  const renderPartnerItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('PartnerDetails', { partner: item })}>
+      <View style={styles.partnerItem}>
+        <Text style={styles.partnerName}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={partners}
+        renderItem={renderPartnerItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
